@@ -9,17 +9,17 @@ if [ $TRAVIS_PULL_REQUEST = "false" ] && [ $TRAVIS_BRANCH = ${DEPLOY_BRANCH} ]; 
   SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
   SHA=`git rev-parse --verify HEAD`
 
+  # add ssh key
+  chmod 600 ../loggingroads_travis
+  eval `ssh-agent -s`
+  ssh-add ../loggingroads_travis
+
   cd deploy
   git init
   git config user.name "Travis-CI"
   git config user.email "travis@somewhere.com"
   git add .
   git commit -m "Deploy to GitHub Pages: ${SHA}"
-
-  # add ssh key
-  chmod 600 loggingroads_travis
-  eval `ssh-agent -s`
-  ssh-add loggingroads_travis
 
   # Now that we're all set up, we can push.
   git push --force --quiet $SSH_REPO master:gh-pages
