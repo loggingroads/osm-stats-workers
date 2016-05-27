@@ -7,6 +7,9 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_c7f8d0d245ad_key -iv $encrypted_c7f8d0d245ad_iv
   -in loggingroads_travis.enc -out loggingroads_travis -d
+- chmod 600 loggingroads_travis
+- eval `ssh-agent -s`
+- ssh-add loggingroads_travis
 - chmod +x ./.build_scripts/deploy.sh
 - chmod +x ./.build_scripts/zip.sh
 script:
