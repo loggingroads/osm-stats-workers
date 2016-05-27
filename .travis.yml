@@ -1,17 +1,15 @@
 language: node_js
-
 env:
   global:
   - GH_REF=github.com/LoggingRoads/osm-stats-workers.git
   - DEPLOY_BRANCH=loggingroads
-  - secure: ""
-
+  - secure: ''
 before_install:
-  - chmod +x ./.build_scripts/deploy.sh
-  - chmod +x ./.build_scripts/zip.sh
-
+- openssl aes-256-cbc -K $encrypted_c7f8d0d245ad_key -iv $encrypted_c7f8d0d245ad_iv
+  -in loggingroads_travis.enc -out loggingroads_travis -d
+- chmod +x ./.build_scripts/deploy.sh
+- chmod +x ./.build_scripts/zip.sh
 script:
-  - "./.build_scripts/zip.sh"
-
+- "./.build_scripts/zip.sh"
 after_success:
-  - "./.build_scripts/deploy.sh"
+- "./.build_scripts/deploy.sh"

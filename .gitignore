@@ -14,3 +14,5 @@ Icon
 
 .nyc_output/
 *.log
+loggingroads_travis
+loggingroads_travis.pub
