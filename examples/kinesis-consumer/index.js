@@ -11,6 +11,7 @@ exports.handler = function (event, context) {
     require('./package.json').version,
     event.Records.length);
 
+  console.log('DATABASE_URL' + process.env.DATABASE_URL);
   // loop through all records in batch
   var worker = new Worker(function (err, changeset) {
     if (err) console.error(err);
@@ -20,7 +21,7 @@ exports.handler = function (event, context) {
   return Promise.map(event.Records, function (record) {
     var payload = new Buffer(record.kinesis.data, 'base64').toString('utf8');
     console.log('PAYLOAD:', payload);
-    changeset = JSON.parse(payload);
+    var changeset = JSON.parse(payload);
     return worker.addToDB(changeset);
   }).then(function (result) {
       //return worker.destroy(function () {
