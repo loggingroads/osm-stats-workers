@@ -72,7 +72,9 @@ var User = bookshelf.Model.extend({
     });
   },
   getGpsTraceCount: function () {
-    return 0;
+    return new Promise(function (fulfill) {
+      fulfill(0);
+    });
     /*
     var userId = this.attributes.id;
     return fetch('http://api.openstreetmap.org/api/0.6/user/' + userId)
