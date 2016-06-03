@@ -17,22 +17,22 @@ exports.handler = function (event, context) {
     if (err) console.error(err);
     else console.log(changeset);
   });
-
+  var changeset = null;
   return Promise.map(event.Records, function (record) {
     var payload = new Buffer(record.kinesis.data, 'base64').toString('utf8');
     console.log('PAYLOAD:', payload);
-    var changeset = JSON.parse(payload);
+    changeset = JSON.parse(payload);
     return worker.addToDB(changeset);
   }).then(function (result) {
-      //return worker.destroy(function () {
-        console.log('SUCCESS: (%s)', changeset.metadata.id, result);
-        return context.succeed('Success');
-      //});
+    // return worker.destroy(function () {
+    console.log('SUCCESS: (%s)', changeset.metadata.id, result);
+    return context.succeed('Success');
+    // });
   }).catch(function (err) {
-      //return worker.destroy(function () {
-        console.log('FAILURE: (%s)', changeset.metadata.id, err);
-        console.trace();
-        return context.fail(err);
-      //});
+    // return worker.destroy(function () {
+    console.log('FAILURE: ', err);
+    console.trace();
+    return context.fail(err);
+    // });
   });
 };
