@@ -47,6 +47,7 @@ module.exports = function (changeset, precision) {
   if (changeset.elements.length > 0) {
     var metadata = changeset.metadata;
     var buf = extentBuffer(changeset);
+    console.log("INFO: (changeset %s convexhull) ", metadata.id, JSON.stringify(buf) );
     return {
       id: Number(metadata.id),
       hashtags: metadata.comment.split(' '),
@@ -54,7 +55,6 @@ module.exports = function (changeset, precision) {
       user: {
         id: Number(metadata.uid),
         name: metadata.user,
-        avatar: '?', // todo: add avatar lookup
         geo_extent: buf
       },
       metrics: {
