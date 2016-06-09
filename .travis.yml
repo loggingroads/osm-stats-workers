@@ -7,6 +7,7 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_c7f8d0d245ad_key -iv $encrypted_c7f8d0d245ad_iv
   -in loggingroads_travis.enc -out loggingroads_travis -d
+- if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 - chmod 600 loggingroads_travis
 - eval `ssh-agent -s`
 - ssh-add loggingroads_travis
