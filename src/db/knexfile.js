@@ -12,9 +12,12 @@ module.exports = {
     },
     pool: {
       min: 0,
-      max: 25
+      max: 25,
+      ping: function (connection, callback) {
+        connection.query({text: 'SELECT 1'}, [], callback);
+      }
     },
-    acquireConnectionTimeout: 100000,
+    acquireConnectionTimeout: 60000,
     migrations: {
       directory: path.join(__dirname, 'migrations')
     },
