@@ -18,6 +18,16 @@ Worker.prototype.destroy = function () {
   return this.bookshelf.knex.destroy();
 };
 
+Worker.prototype.reconnectDB = function () {
+  var _this = this;
+  return this.bookshelf.knex.destroy()
+  .then(function () {
+    var knex = require('./src/common/db_connection_knex.js');
+    _this.bookshelf = require('bookshelf')(knex);
+    return true;
+  });
+};
+
 Worker.prototype.addToDB = function (changeset) {
   this.changeset = changeset;
   var component = this;
