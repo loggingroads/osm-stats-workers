@@ -73,7 +73,7 @@ Worker.prototype.addToDB = function (changeset) {
     })
     .catch(function (err) {
       component.logger(err, changeset);
-      return Promise.reject(err);
+      return err;
     });
   } else {
     return ('No tracked changes in changeset ' + changeset.metadata.id);

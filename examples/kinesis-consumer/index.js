@@ -22,15 +22,15 @@ exports.handler = function (event, context) {
     var payload = new Buffer(record.kinesis.data, 'base64').toString('utf8');
     console.log('PAYLOAD:', payload);
     changeset = JSON.parse(payload);
-    try {
-      return worker.addToDB(changeset);
-    } catch (e) {
-      console.log('Database Error Trying Again: ', e);
+
+    return worker.addToDB(changeset)
+    .catch(function (err) {
+      console.log('Database Error Trying Again: ', err);
       return worker.reconnectDB()
       .then(function () {
         return worker.addToDB(changeset);
       });
-    }
+    });
   }).then(function (result) {
     // return worker.destroy(function () {
     console.log('SUCCESS: (%s)', changeset.metadata.id, result);
