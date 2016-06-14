@@ -72,10 +72,6 @@ var User = bookshelf.Model.extend({
     });
   },
   getGpsTraceCount: function () {
-    return new Promise(function (resolve) {
-      resolve(0);
-    });
-    /*
     var userId = this.attributes.id;
     return fetch('http://api.openstreetmap.org/api/0.6/user/' + userId)
     .then(function (xml) {
@@ -86,14 +82,10 @@ var User = bookshelf.Model.extend({
       }
       return traceCount;
     });
-    */
   },
   getTaskingManagerStats: function (userId) {
     var userTaskStats = {done: 0, validated: 0, invalidated: 0};
-    return new Promise(function (resolve) {
-      resolve(userTaskStats);
-    });
-    /*
+
     return fetch('http://tasks.hotosm.org/user_data/' + userId + '.json')
     .then(function (user) {
       user = JSON.parse(user);
@@ -111,7 +103,6 @@ var User = bookshelf.Model.extend({
       }
       throw new Error('Bad response from server:', response);
     });
-    */
   },
   updateUserMetrics: function (metrics, newExtent, transaction) {
     var user = this;
